@@ -40,6 +40,23 @@ The [`writing-portable-skills`](writing-portable-skills/SKILL.md) skill has
 the full rules. Ask any agent to "add a skill to my agent-skills repo" and it
 will follow them.
 
+## Keep private info out (this repo is public)
+
+Never commit secrets, personal details, home-directory paths or
+client/employer information. [`AGENTS.md`](AGENTS.md) has the full checklist,
+and every agent working in this repo reads it before committing. Claude Code
+reads it through the `CLAUDE.md` link.
+
+`install.sh` also turns on a pre-commit hook that blocks commits containing
+likely secrets, email addresses, home paths, private IPs or files like `.env`
+and `*.pem`. Scan the whole repo any time with:
+
+```bash
+.githooks/pre-commit --all
+```
+
+If it flags a line that is safe, add `privacy-check: allow` to that line.
+
 ## Using skills in a single project instead
 
 To pin skills to one repo (for teammates or cloud agents), copy the skill

@@ -1,0 +1,72 @@
+#!/usr/bin/env bash
+# Block commits that look like they contain private info. This repo is PUBLIC.
+#
+# Usage: runs automatically on `git commit` (install.sh sets core.hooksPath).
+#        .githooks/pre-commit --all    scan every tracked file instead of staged ones
+#
+# False positive? Add "privacy-check: allow" to that line, or as a last resort
+# commit with --no-verify after checking the change yourself.
+set -uo pipefail
+cd "$(git rev-parse --show-toplevel)"
+
+# label, regex (grep -E, case-insensitive), matches to ignore (empty = none)
+labels=(); regexes=(); ignores=()
+add() { labels+=("$1"); regexes+=("$2"); ignores+=("${3:-}"); }
+
+add "private key"         '-----BEGIN [A-Z ]*PRIVATE KEY-----'
+add "AWS access key"      'AKIA[0-9A-Z]{16}'
+add "GitHub token"        'gh[pousr]_[A-Za-z0-9]{30,}|github_pat_[A-Za-z0-9_]{20,}'
+add "API key (sk-...)"    'sk-[A-Za-z0-9_-]{20,}'
+add "Slack token"         'xox[abprs]-[A-Za-z0-9-]{10,}'
+add "Google API key"      'AIza[0-9A-Za-z_-]{35}'
+add "hard-coded secret"   '(api[_-]?key|secret|token|passw(or)?d)["'"'"']?[[:space:]]*[:=][[:space:]]*["'"'"'][^"'"'"'[:space:]]{8,}["'"'"']' \
+                          '(your|my|example|placeholder|changeme|xxx|<)'
+add "email address"       '[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}' \
+                          'noreply|@example\.(com|org|net)|@users\.noreply\.github\.com'
+add "personal home path"  '/Users/[A-Za-z0-9._-]+/|/home/[A-Za-z0-9._-]+/|[Cc]:\\Users\\[A-Za-z0-9._-]+' \
+                          '/(Users|home)/(you|user|username|me|name|example)/'
+add "private IP address"  '(^|[^0-9.])(10\.[0-9]{1,3}|192\.168|172\.(1[6-9]|2[0-9]|3[01]))\.[0-9]{1,3}\.[0-9]{1,3}([^0-9]|$)'
+
+risky_names='(^|/)(\.env(\.[a-z]+)?|id_(rsa|dsa|ecdsa|ed25519)|credentials(\.json)?|.*\.(pem|key|p12|pfx|keystore|jks))$'
+safe_names='\.env\.(example|sample|template)$'
+
+if [ "${1:-}" = "--all" ]; then
+  files=$(git ls-files)
+  show() { cat -- "$1"; }
+else
+  files=$(git diff --cached --name-only --diff-filter=ACMR)
+  show() { git show ":$1"; }
+fi
+
+problems=0
+while IFS= read -r f; do
+  [ -n "$f" ] || continue
+  [ "$f" = ".githooks/pre-commit" ] && continue   # holds the patterns themselves
+  if echo "$f" | grep -qE "$risky_names" && ! echo "$f" | grep -qE "$safe_names"; then
+    echo "✗ $f: file type usually holds secrets; don't commit it"; problems=$((problems+1))
+  fi
+  content=$(show "$f" 2>/dev/null) || continue
+  printf '%s' "$content" | grep -qI . || continue  # skip binary/empty files
+  for i in "${!labels[@]}"; do
+    hits=$(printf '%s\n' "$content" | grep -nEi -- "${regexes[$i]}" | grep -v 'privacy-check: allow')
+    if [ -n "${ignores[$i]}" ] && [ -n "$hits" ]; then
+      hits=$(printf '%s\n' "$hits" | while IFS= read -r line; do
+        # keep the line if any match on it is not an allowed placeholder
+        printf '%s\n' "$line" | grep -oEi -- "${regexes[$i]}" | grep -qvEi -- "${ignores[$i]}" && printf '%s\n' "$line"
+      done)
+    fi
+    [ -n "$hits" ] || continue
+    for n in $(printf '%s\n' "$hits" | cut -d: -f1); do
+      echo "✗ $f:$n: possible ${labels[$i]}"; problems=$((problems+1))
+    done
+  done
+done <<< "$files"
+
+if [ "$problems" -gt 0 ]; then
+  echo
+  echo "Privacy check found $problems possible problem(s). This repo is public."
+  echo "Remove the info, or add 'privacy-check: allow' to a line that is safe."
+  exit 1
+fi
+[ "${1:-}" = "--all" ] && echo "✓ privacy check: no private info found"
+exit 0

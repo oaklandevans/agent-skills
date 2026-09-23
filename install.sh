@@ -44,6 +44,13 @@ if [ "$errors" -gt 0 ]; then
   echo "$errors problem(s) found. Fix them before installing."; exit 1
 fi
 echo "✓ ${#skills[@]} skill(s) valid: ${skills[*]:-none}"
+
+# This repo is public: scan everything for private info, and make sure the
+# pre-commit hook that does the same on every commit is turned on.
+if [ -d "$REPO_DIR/.git" ]; then
+  "$REPO_DIR/.githooks/pre-commit" --all || exit 1
+  git -C "$REPO_DIR" config core.hooksPath .githooks
+fi
 [ "${1:-}" = "--check" ] && exit 0
 
 # Copilot + opencode: point ~/.agents/skills at this repo if it isn't already.

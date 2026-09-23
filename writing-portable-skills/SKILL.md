@@ -45,8 +45,17 @@ skill would behave differently depending on where it runs.
 - Scripts should need only common tools (bash, python3, git) and print clear
   errors when something is missing.
 
+## Keep it public-safe
+
+The repo is public. Never put secrets, personal details, absolute home paths
+or client/employer information in a skill. Use placeholders such as
+`<api-key>` or `name@example.com`, and have skills read secrets from
+environment variables at run time. Follow the full checklist in the repo's
+`AGENTS.md` before committing.
+
 ## After adding or renaming a skill
 
-1. Run `./install.sh --check` from the repo root to validate every skill.
+1. Run `./install.sh --check` from the repo root to validate every skill and
+   scan the repo for private info.
 2. Run `./install.sh` so Claude Code picks up the new skill.
 3. Commit and push. On other machines, `git pull` then `./install.sh`.
