@@ -41,6 +41,23 @@ The [`writing-portable-skills`](writing-portable-skills/SKILL.md) skill has
 the full rules. Ask any agent to "add a skill to my agent-skills repo" and it
 will follow them.
 
+## Skills from other repos
+
+Some skills are copied from other public repos instead of written here. They
+are listed in [`upstream.txt`](upstream.txt), and each copied folder has the
+original `LICENSE` and an `UPSTREAM.md` that links to the exact source commit.
+
+To pull in their latest versions, run this on a branch, review the diff and
+open a pull request:
+
+```bash
+./sync-upstream.sh
+```
+
+Don't edit those folders by hand: the next sync overwrites them. To add
+another skill, add a line to `upstream.txt` (only for licenses that allow
+copying, such as MIT or Apache 2.0) and run the script.
+
 ## Keep private info out (this repo is public)
 
 Never commit secrets, personal details, home-directory paths or
@@ -68,4 +85,6 @@ folder. Claude Code reads `.claude/skills/`, so add a symlink there too.
 
 | Skill | What it does |
 |---|---|
+| [angular-developer](angular-developer/SKILL.md) | Modern Angular code and architecture: signals, forms, DI, routing, SSR, testing (from [angular/skills](https://github.com/angular/skills)) |
+| [angular-new-app](angular-new-app/SKILL.md) | Create a new Angular app with the Angular CLI (from [angular/skills](https://github.com/angular/skills)) |
 | [writing-portable-skills](writing-portable-skills/SKILL.md) | Rules for adding skills to this repo so they work in every agent |
