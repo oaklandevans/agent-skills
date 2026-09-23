@@ -5,6 +5,21 @@ and opencode. **The repo is public on GitHub.** Anything committed here can be
 read, copied and indexed by anyone, and stays in git history even after it is
 deleted.
 
+## Branches and pull requests
+
+Never commit or push directly to `main`. For every change:
+
+1. Create a branch from an up-to-date `main`, named for the change
+   (for example `add-release-notes-skill` or `fix/install-links`).
+2. Commit there, after the privacy check below.
+3. Push the branch and open a pull request against `main` with a short
+   summary of what changed and why.
+4. Leave merging to the user unless they explicitly ask you to merge.
+
+Note that `~/.agents/skills` is the live copy every agent reads skills from.
+While a branch is checked out there, agents see that branch's skills, so
+switch back to `main` (`git switch main && git pull`) once the PR is merged.
+
 ## Before every commit: privacy check
 
 Before you stage or commit anything, review the full diff (`git diff --cached`)

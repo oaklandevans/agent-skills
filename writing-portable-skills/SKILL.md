@@ -58,4 +58,7 @@ environment variables at run time. Follow the full checklist in the repo's
 1. Run `./install.sh --check` from the repo root to validate every skill and
    scan the repo for private info.
 2. Run `./install.sh` so Claude Code picks up the new skill.
-3. Commit and push. On other machines, `git pull` then `./install.sh`.
+3. Commit on a branch, push it and open a pull request against `main`
+   (never commit to `main` directly; see the repo's `AGENTS.md`).
+4. After the PR is merged, on each machine: `git switch main && git pull`,
+   then `./install.sh`.

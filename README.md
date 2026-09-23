@@ -34,7 +34,8 @@ deleted ones.
 1. Create `<skill-name>/SKILL.md` at the repo root. The folder name must
    equal the `name` in the frontmatter.
 2. Run `./install.sh --check` to validate it, then `./install.sh`.
-3. Commit and push.
+3. Commit on a branch and open a pull request. Changes go through PRs,
+   not straight to `main` (see [`AGENTS.md`](AGENTS.md)).
 
 The [`writing-portable-skills`](writing-portable-skills/SKILL.md) skill has
 the full rules. Ask any agent to "add a skill to my agent-skills repo" and it
