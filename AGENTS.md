@@ -71,3 +71,7 @@ private IP addresses and risky file types such as `.env` or `*.pem`.
 Follow the [`writing-portable-skills`](writing-portable-skills/SKILL.md)
 skill: plain `SKILL.md` folders at the repo root, only standard frontmatter,
 no vendor-specific fields. Run `./install.sh --check` before committing.
+
+Folders listed in `upstream.txt` are copies of other repos' skills. Don't edit
+them by hand; `./sync-upstream.sh` overwrites them with the latest upstream
+version.

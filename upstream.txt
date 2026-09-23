@@ -1,0 +1,10 @@
+# Skills copied from other repos. sync-upstream.sh re-copies each one.
+#
+# Format (one skill per line, fields separated by spaces):
+#   <folder> <git-repo-url> <path-in-repo> [<license-url>]
+#
+# <license-url> is only needed when the skill folder has no LICENSE file of
+# its own. Only add skills whose license allows copying into a public repo.
+
+angular-developer https://github.com/angular/skills angular-developer https://raw.githubusercontent.com/angular/angular/main/LICENSE
+angular-new-app   https://github.com/angular/skills angular-new-app   https://raw.githubusercontent.com/angular/angular/main/LICENSE
