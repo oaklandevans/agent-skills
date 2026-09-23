@@ -7,7 +7,13 @@
 # False positive? Add "privacy-check: allow" to that line, or as a last resort
 # commit with --no-verify after checking the change yourself.
 set -uo pipefail
-cd "$(git rev-parse --show-toplevel)"
+# Run from the repo this script lives in, whatever the caller's directory.
+# Fail loudly rather than "passing" after scanning nothing.
+cd "$(dirname "${BASH_SOURCE[0]}")/.." || exit 1
+if ! repo_root=$(git rev-parse --show-toplevel 2>/dev/null); then
+  echo "✗ privacy check: $(pwd) is not a git repository; nothing was scanned"; exit 1
+fi
+cd "$repo_root" || exit 1
 
 # label, regex (grep -E, case-insensitive), matches to ignore (empty = none)
 labels=(); regexes=(); ignores=()
