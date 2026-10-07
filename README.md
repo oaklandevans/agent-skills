@@ -87,4 +87,5 @@ folder. Claude Code reads `.claude/skills/`, so add a symlink there too.
 |---|---|
 | [angular-developer](angular-developer/SKILL.md) | Modern Angular code and architecture: signals, forms, DI, routing, SSR, testing (from [angular/skills](https://github.com/angular/skills)) |
 | [angular-new-app](angular-new-app/SKILL.md) | Create a new Angular app with the Angular CLI (from [angular/skills](https://github.com/angular/skills)) |
+| [systematic-debugging](systematic-debugging/SKILL.md) | Find the root cause of a bug, test failure or unexpected behavior before proposing a fix (from [obra/superpowers](https://github.com/obra/superpowers)) |
 | [writing-portable-skills](writing-portable-skills/SKILL.md) | Rules for adding skills to this repo so they work in every agent |
