@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 # Re-copy the skills listed in upstream.txt from their source repos, so they
 # stay current. Each copied folder gets the upstream LICENSE and an
-# UPSTREAM.md saying where it came from. Local edits to those folders are
-# overwritten, so change them upstream instead.
+# UPSTREAM.md saying where it came from. If a skill's files didn't change,
+# UPSTREAM.md keeps the commit it already records, so there's no diff.
+# Local edits to those folders are overwritten, so change them upstream
+# instead.
 #
 # Usage: ./sync-upstream.sh            sync every skill in upstream.txt
 #        ./sync-upstream.sh <folder>   sync just that one
@@ -37,7 +39,10 @@ while read -r folder url path license_url; do
   commit="$(git -C "$clone" rev-parse HEAD)"
 
   dest="$REPO_DIR/$folder"
-  rm -rf "$dest"
+  # Keep the previous copy to tell whether anything really changed.
+  old="$tmp/old-$folder"
+  rm -rf "$old"
+  [ ! -d "$dest" ] || mv "$dest" "$old"
   mkdir -p "$dest"
   cp -R "$src"/. "$dest"/
 
@@ -47,6 +52,15 @@ while read -r folder url path license_url; do
     else
       echo "! $folder: no LICENSE found upstream; add a <license-url> in upstream.txt"
     fi
+  fi
+
+  # Upstream repos get commits that don't touch this skill. If nothing but
+  # UPSTREAM.md would change, keep the commit it already records so the
+  # sync doesn't produce a diff (and a pull request) for nothing.
+  status="✓"
+  if [ -f "$old/UPSTREAM.md" ] && diff -rq -x UPSTREAM.md "$old" "$dest" >/dev/null; then
+    old_commit="$(sed -n 's/^at commit `\([0-9a-f]\{40\}\)`.*/\1/p' "$old/UPSTREAM.md")"
+    [ -z "$old_commit" ] || { commit="$old_commit"; status="="; }
   fi
 
   license_file=LICENSE
@@ -61,7 +75,11 @@ at commit \`$commit\`. See \`$license_file\` for its terms.
 Don't edit it here: \`sync-upstream.sh\` overwrites this folder. Send changes
 upstream instead.
 EOF
-  echo "✓ $folder ← $url ($path @ ${commit:0:7})"
+  if [ "$status" = "=" ]; then
+    echo "= $folder unchanged (still $path @ ${commit:0:7})"
+  else
+    echo "✓ $folder ← $url ($path @ ${commit:0:7})"
+  fi
   synced=$((synced+1))
 done < "$MANIFEST"
 
