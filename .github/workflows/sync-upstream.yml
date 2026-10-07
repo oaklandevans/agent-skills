@@ -13,6 +13,7 @@ on:
   workflow_dispatch:
 
 permissions:
+  actions: write # start check.yml on the sync branch
   contents: write
   pull-requests: write
 
@@ -41,8 +42,8 @@ jobs:
             echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
 
-      # PRs opened by this workflow don't trigger check.yml, so check here.
-      # This also turns on the pre-commit privacy hook for the commit below.
+      # Catch problems before pushing. This also turns on the pre-commit
+      # privacy hook for the commit below.
       - name: Validate skills and scan for private info
         if: steps.diff.outputs.changed == 'true'
         run: ./install.sh --check
@@ -59,6 +60,11 @@ jobs:
           git commit -m "Sync upstream skills"
           # This branch belongs to the workflow; replace last week's if unmerged.
           git push --force origin "$BRANCH"
+
+          # Pushes and PRs made with this workflow's token don't trigger other
+          # workflows, but a manual dispatch does. Its "check" result lands on
+          # the pushed commit, which is what branch protection requires.
+          gh workflow run check.yml --ref "$BRANCH"
 
           if [ -n "$(gh pr list --head "$BRANCH" --state open --json number --jq '.[]')" ]; then
             echo "Updated the open upstream-sync pull request."
