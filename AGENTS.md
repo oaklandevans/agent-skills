@@ -57,8 +57,8 @@ generalize it, and tell the user what you changed.
 staged files for common secrets, email addresses, home-directory paths,
 private IP addresses and risky file types such as `.env` or `*.pem`.
 
-- Run it on the whole repo at any time: `.githooks/pre-commit --all`
-  (also run by `./install.sh --check`).
+- Run it on the whole repo at any time, including new files you haven't
+  staged yet: `.githooks/pre-commit --all` (also run by `./install.sh --check`).
 - The hook catches common patterns only. It does **not** replace the manual
   review above: it can't recognize client names, internal URLs or private
   context.

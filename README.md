@@ -67,7 +67,8 @@ reads it through the `CLAUDE.md` link.
 
 `install.sh` also turns on a pre-commit hook that blocks commits containing
 likely secrets, email addresses, home paths, private IPs or files like `.env`
-and `*.pem`. Scan the whole repo any time with:
+and `*.pem`. Scan the whole repo any time, including new files you haven't
+staged yet, with:
 
 ```bash
 .githooks/pre-commit --all
