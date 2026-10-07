@@ -87,6 +87,8 @@ folder. Claude Code reads `.claude/skills/`, so add a symlink there too.
 |---|---|
 | [angular-developer](angular-developer/SKILL.md) | Modern Angular code and architecture: signals, forms, DI, routing, SSR, testing (from [angular/skills](https://github.com/angular/skills)) |
 | [angular-new-app](angular-new-app/SKILL.md) | Create a new Angular app with the Angular CLI (from [angular/skills](https://github.com/angular/skills)) |
+| [frontend-design](frontend-design/SKILL.md) | Visual design direction for new or reworked UI: aesthetics, typography, avoiding templated defaults (from [anthropics/skills](https://github.com/anthropics/skills)) |
+| [playwright-expert](playwright-expert/SKILL.md) | Write and fix Playwright end-to-end tests: page objects, fixtures, API mocking, CI, flaky tests (from [jeffallan/claude-skills](https://github.com/jeffallan/claude-skills)) |
 | [systematic-debugging](systematic-debugging/SKILL.md) | Find the root cause of a bug, test failure or unexpected behavior before proposing a fix (from [obra/superpowers](https://github.com/obra/superpowers)) |
 | [test-driven-development](test-driven-development/SKILL.md) | Write a failing test first, then the code to make it pass, for any feature or bugfix (from [obra/superpowers](https://github.com/obra/superpowers)) |
 | [verification-before-completion](verification-before-completion/SKILL.md) | Run the checks and read their output before claiming work is done, fixed or passing (from [obra/superpowers](https://github.com/obra/superpowers)) |
