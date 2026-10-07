@@ -11,5 +11,11 @@ angular-new-app   https://github.com/angular/skills angular-new-app   https://ra
 systematic-debugging https://github.com/obra/superpowers skills/systematic-debugging https://raw.githubusercontent.com/obra/superpowers/main/LICENSE
 test-driven-development https://github.com/obra/superpowers skills/test-driven-development https://raw.githubusercontent.com/obra/superpowers/main/LICENSE
 verification-before-completion https://github.com/obra/superpowers skills/verification-before-completion https://raw.githubusercontent.com/obra/superpowers/main/LICENSE
+brainstorming https://github.com/obra/superpowers skills/brainstorming https://raw.githubusercontent.com/obra/superpowers/main/LICENSE
+writing-plans https://github.com/obra/superpowers skills/writing-plans https://raw.githubusercontent.com/obra/superpowers/main/LICENSE
+executing-plans https://github.com/obra/superpowers skills/executing-plans https://raw.githubusercontent.com/obra/superpowers/main/LICENSE
+requesting-code-review https://github.com/obra/superpowers skills/requesting-code-review https://raw.githubusercontent.com/obra/superpowers/main/LICENSE
+receiving-code-review https://github.com/obra/superpowers skills/receiving-code-review https://raw.githubusercontent.com/obra/superpowers/main/LICENSE
+finishing-a-development-branch https://github.com/obra/superpowers skills/finishing-a-development-branch https://raw.githubusercontent.com/obra/superpowers/main/LICENSE
 playwright-expert https://github.com/jeffallan/claude-skills skills/playwright-expert https://raw.githubusercontent.com/jeffallan/claude-skills/main/LICENSE
 frontend-design   https://github.com/anthropics/skills       skills/frontend-design
