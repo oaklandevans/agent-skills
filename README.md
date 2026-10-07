@@ -90,6 +90,8 @@ folder. Claude Code reads `.claude/skills/`, so add a symlink there too.
 | [brainstorming](brainstorming/SKILL.md) | Pin down requirements and design through questions before building a feature, then write a spec (from [obra/superpowers](https://github.com/obra/superpowers)) |
 | [executing-plans](executing-plans/SKILL.md) | Work through an implementation plan task by task in the current session (from [obra/superpowers](https://github.com/obra/superpowers)) |
 | [finishing-a-development-branch](finishing-a-development-branch/SKILL.md) | Check tests pass, then choose whether to merge, open a PR, keep or discard a finished branch (from [obra/superpowers](https://github.com/obra/superpowers)) |
+| [frontend-design](frontend-design/SKILL.md) | Visual design direction for new or reworked UI: aesthetics, typography, avoiding templated defaults (from [anthropics/skills](https://github.com/anthropics/skills)) |
+| [playwright-expert](playwright-expert/SKILL.md) | Write and fix Playwright end-to-end tests: page objects, fixtures, API mocking, CI, flaky tests (from [jeffallan/claude-skills](https://github.com/jeffallan/claude-skills)) |
 | [receiving-code-review](receiving-code-review/SKILL.md) | Check review feedback is technically right before acting on it (from [obra/superpowers](https://github.com/obra/superpowers)) |
 | [requesting-code-review](requesting-code-review/SKILL.md) | Get finished work reviewed against its plan before merging (from [obra/superpowers](https://github.com/obra/superpowers)) |
 | [systematic-debugging](systematic-debugging/SKILL.md) | Find the root cause of a bug, test failure or unexpected behavior before proposing a fix (from [obra/superpowers](https://github.com/obra/superpowers)) |

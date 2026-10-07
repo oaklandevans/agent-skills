@@ -17,3 +17,5 @@ executing-plans https://github.com/obra/superpowers skills/executing-plans https
 requesting-code-review https://github.com/obra/superpowers skills/requesting-code-review https://raw.githubusercontent.com/obra/superpowers/main/LICENSE
 receiving-code-review https://github.com/obra/superpowers skills/receiving-code-review https://raw.githubusercontent.com/obra/superpowers/main/LICENSE
 finishing-a-development-branch https://github.com/obra/superpowers skills/finishing-a-development-branch https://raw.githubusercontent.com/obra/superpowers/main/LICENSE
+playwright-expert https://github.com/jeffallan/claude-skills skills/playwright-expert https://raw.githubusercontent.com/jeffallan/claude-skills/main/LICENSE
+frontend-design   https://github.com/anthropics/skills       skills/frontend-design

@@ -49,11 +49,14 @@ while read -r folder url path license_url; do
     fi
   fi
 
+  license_file=LICENSE
+  [ -f "$dest/LICENSE" ] || [ ! -f "$dest/LICENSE.txt" ] || license_file=LICENSE.txt
+
   cat > "$dest/UPSTREAM.md" <<EOF
 # Upstream source
 
 This skill is copied from [$url]($url/tree/$commit/$path)
-at commit \`$commit\`. See \`LICENSE\` for its terms.
+at commit \`$commit\`. See \`$license_file\` for its terms.
 
 Don't edit it here: \`sync-upstream.sh\` overwrites this folder. Send changes
 upstream instead.
