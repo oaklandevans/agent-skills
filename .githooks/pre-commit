@@ -2,7 +2,8 @@
 # Block commits that look like they contain private info. This repo is PUBLIC.
 #
 # Usage: runs automatically on `git commit` (install.sh sets core.hooksPath).
-#        .githooks/pre-commit --all    scan every tracked file instead of staged ones
+#        .githooks/pre-commit --all    scan every tracked and untracked file
+#                                      (skipping .gitignore'd ones) instead of staged ones
 #
 # False positive? Add "privacy-check: allow" to that line, or as a last resort
 # commit with --no-verify after checking the change yourself.
@@ -37,7 +38,7 @@ risky_names='(^|/)(\.env(\.[a-z]+)?|id_(rsa|dsa|ecdsa|ed25519)|credentials(\.jso
 safe_names='\.env\.(example|sample|template)$'
 
 if [ "${1:-}" = "--all" ]; then
-  files=$(git ls-files)
+  files=$(git ls-files --cached --others --exclude-standard)
   show() { cat -- "$1"; }
 else
   files=$(git diff --cached --name-only --diff-filter=ACMR)

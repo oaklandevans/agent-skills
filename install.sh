@@ -6,7 +6,7 @@
 #   skill gets a symlink there.
 #
 # Usage: ./install.sh            link skills (safe to re-run)
-#        ./install.sh --check    only validate SKILL.md files
+#        ./install.sh --check    only validate SKILL.md files and scan for private info
 set -euo pipefail
 
 REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -47,7 +47,8 @@ echo "✓ ${#skills[@]} skill(s) valid: ${skills[*]:-none}"
 
 # This repo is public: scan everything for private info, and make sure the
 # pre-commit hook that does the same on every commit is turned on.
-if [ -d "$REPO_DIR/.git" ]; then
+# .git is a file, not a folder, in a git worktree.
+if [ -e "$REPO_DIR/.git" ]; then
   "$REPO_DIR/.githooks/pre-commit" --all || exit 1
   git -C "$REPO_DIR" config core.hooksPath .githooks
 fi
