@@ -9,3 +9,5 @@
 angular-developer https://github.com/angular/skills angular-developer https://raw.githubusercontent.com/angular/angular/main/LICENSE
 angular-new-app   https://github.com/angular/skills angular-new-app   https://raw.githubusercontent.com/angular/angular/main/LICENSE
 systematic-debugging https://github.com/obra/superpowers skills/systematic-debugging https://raw.githubusercontent.com/obra/superpowers/main/LICENSE
+test-driven-development https://github.com/obra/superpowers skills/test-driven-development https://raw.githubusercontent.com/obra/superpowers/main/LICENSE
+verification-before-completion https://github.com/obra/superpowers skills/verification-before-completion https://raw.githubusercontent.com/obra/superpowers/main/LICENSE
