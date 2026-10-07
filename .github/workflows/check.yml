@@ -1,0 +1,20 @@
+# Validate every SKILL.md and scan the repo for private info on each pull
+# request and push to main. Same check as `./install.sh --check` locally.
+name: Check
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Validate skills and scan for private info
+        run: ./install.sh --check
