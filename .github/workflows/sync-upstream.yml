@@ -1,0 +1,73 @@
+# Once a week, re-copy the skills in upstream.txt and open a pull request
+# if any of them changed upstream. Review the PR before merging: it brings
+# in other people's content.
+#
+# Needs "Allow GitHub Actions to create and approve pull requests" turned on
+# in Settings → Actions → General. Without it the job pushes the branch and
+# fails at the PR step.
+name: Sync upstream skills
+
+on:
+  schedule:
+    - cron: "0 9 * * 1" # Mondays 09:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency: sync-upstream
+
+env:
+  BRANCH: upstream-sync
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Sync upstream skills
+        run: ./sync-upstream.sh
+
+      - name: Check for changes
+        id: diff
+        run: |
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "Every upstream skill is already current."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            git status --short
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      # PRs opened by this workflow don't trigger check.yml, so check here.
+      # This also turns on the pre-commit privacy hook for the commit below.
+      - name: Validate skills and scan for private info
+        if: steps.diff.outputs.changed == 'true'
+        run: ./install.sh --check
+
+      - name: Commit and open a pull request
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -c "$BRANCH"
+          git add -A
+          git commit -m "Sync upstream skills"
+          # This branch belongs to the workflow; replace last week's if unmerged.
+          git push --force origin "$BRANCH"
+
+          if [ -n "$(gh pr list --head "$BRANCH" --state open --json number --jq '.[]')" ]; then
+            echo "Updated the open upstream-sync pull request."
+            exit 0
+          fi
+          body="Weekly run of \`./sync-upstream.sh\`. \`./install.sh --check\` passed.
+
+          Review the diff before merging: it brings in content from other repos."
+          if ! gh pr create --base main --head "$BRANCH" --title "Sync upstream skills" --body "$body"; then
+            echo "::error::Pushed $BRANCH but couldn't open a pull request. Turn on 'Allow GitHub Actions to create and approve pull requests' in Settings → Actions → General, or open the PR by hand."
+            exit 1
+          fi

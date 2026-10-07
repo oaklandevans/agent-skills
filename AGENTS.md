@@ -65,6 +65,9 @@ private IP addresses and risky file types such as `.env` or `*.pem`.
 - If it flags something that is genuinely safe (for example a placeholder),
   add `privacy-check: allow` to that line. Don't use `git commit --no-verify`
   unless the user explicitly asks you to.
+- GitHub Actions runs `./install.sh --check` on every pull request
+  (`.github/workflows/check.yml`). If it fails, fix the problem on the branch
+  and push again.
 
 ## Adding or editing skills
 
@@ -74,4 +77,5 @@ no vendor-specific fields. Run `./install.sh --check` before committing.
 
 Folders listed in `upstream.txt` are copies of other repos' skills. Don't edit
 them by hand; `./sync-upstream.sh` overwrites them with the latest upstream
-version.
+version. A weekly workflow (`.github/workflows/sync-upstream.yml`) runs it and
+opens an `upstream-sync` pull request; review that diff like any other.

@@ -54,6 +54,13 @@ open a pull request:
 ./sync-upstream.sh
 ```
 
+A GitHub Actions workflow
+([`sync-upstream.yml`](.github/workflows/sync-upstream.yml)) also does this
+every Monday and opens a pull request when something changed. It needs
+**Allow GitHub Actions to create and approve pull requests** turned on in the
+repo's Settings → Actions → General. You can also run it by hand from the
+Actions tab.
+
 Don't edit those folders by hand: the next sync overwrites them. To add
 another skill, add a line to `upstream.txt` (only for licenses that allow
 copying, such as MIT or Apache 2.0) and run the script.
@@ -75,6 +82,10 @@ staged yet, with:
 ```
 
 If it flags a line that is safe, add `privacy-check: allow` to that line.
+
+The same check (`./install.sh --check`) runs on GitHub for every pull request
+and push to `main` ([`check.yml`](.github/workflows/check.yml)), so it still
+catches problems from a machine where the hook isn't turned on.
 
 ## Using skills in a single project instead
 
