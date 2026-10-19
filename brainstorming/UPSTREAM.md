@@ -1,7 +1,7 @@
 # Upstream source
 
-This skill is copied from [https://github.com/obra/superpowers](https://github.com/obra/superpowers/tree/8ca22dba9a94f28898bbce59f2537ff4d87c747d/skills/brainstorming)
-at commit `8ca22dba9a94f28898bbce59f2537ff4d87c747d`. See `LICENSE` for its terms.
+This skill is copied from [https://github.com/obra/superpowers](https://github.com/obra/superpowers/tree/bb92a77741419a4ab5f06e711a283343f1ada0c3/skills/brainstorming)
+at commit `bb92a77741419a4ab5f06e711a283343f1ada0c3`. See `LICENSE` for its terms.
 
 Don't edit it here: `sync-upstream.sh` overwrites this folder. Send changes
 upstream instead.
