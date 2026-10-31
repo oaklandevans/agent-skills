@@ -109,5 +109,6 @@ folder. Claude Code reads `.claude/skills/`, so add a symlink there too.
 | [systematic-debugging](systematic-debugging/SKILL.md) | Find the root cause of a bug, test failure or unexpected behavior before proposing a fix (from [obra/superpowers](https://github.com/obra/superpowers)) |
 | [test-driven-development](test-driven-development/SKILL.md) | Write a failing test first, then the code to make it pass, for any feature or bugfix (from [obra/superpowers](https://github.com/obra/superpowers)) |
 | [verification-before-completion](verification-before-completion/SKILL.md) | Run the checks and read their output before claiming work is done, fixed or passing (from [obra/superpowers](https://github.com/obra/superpowers)) |
+| [viewing-ui-changes](viewing-ui-changes/SKILL.md) | Open the app in a browser after a UI change: screenshots at phone, tablet and desktop widths plus console errors, failed requests and overflow, using the project's own Playwright. Installs nothing |
 | [writing-plans](writing-plans/SKILL.md) | Turn a spec into a step-by-step implementation plan before touching code (from [obra/superpowers](https://github.com/obra/superpowers)) |
 | [writing-portable-skills](writing-portable-skills/SKILL.md) | Rules for adding skills to this repo so they work in every agent |
